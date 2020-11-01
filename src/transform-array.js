@@ -2,7 +2,6 @@ const CustomError = require("../extensions/custom-error");
 
 module.exports = function transform(arr) {
   if (arr.length === 0 || typeof (arr) !== "object") return arr;
-  console.log(arr);
   if(arr[0]==="--discard-prev" && arr[2]==="--double-prev" && arr.length===3) return arr;
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === "--discard-next") {
