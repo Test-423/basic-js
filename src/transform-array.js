@@ -1,43 +1,46 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function transform(arr) {
-  if (arr.length === 0 || typeof (arr) !== "object") return arr;
-  if(arr[0]==="--discard-prev" && arr[2]==="--double-prev" && arr.length===3) return arr;
+  if (arr.length === 0 || typeof (arr) !== "object") return arr
+  //console.log(arr)
+  //console.log(arr.length)
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === "--discard-next") {
-      if (i < arr.length - 1) {
-        arr.splice(i, 2,"sus");
-      } else {
-        arr.splice(i, 1,"sus");
+    let key = arr[i]
+    //console.log(key)
+    if (typeof (key) === "object") return arr
+
+    if (key === "--double-prev") {
+      if (typeof (arr[i - 1]) !== "undefined") {
+        arr[i] = arr[i - 1]
       }
-      i--;
     }
-    if (arr[i] === "--discard-prev") {
-      if (i > 0) {
-        arr.splice(i - 1, 2,"sus");
-      } else {
-        arr.splice(i, 1,"sus");
+    else if (key === "--discard-prev") {
+      if (typeof (arr[i - 1]) !== "undefined") {
+        arr[i - 1] = NaN
+        arr[i] = NaN
       }
-      i--;
     }
-    if (arr[i] === "--double-next") {
-      if (i < arr.length - 1) {
-        arr[i] = arr[i + 1];
-      } else {
-        arr.splice(i, 1);
+    else if (key === "--double-next") {
+      if (typeof (arr[i + 1]) !== "undefined") {
+        arr[i] = arr[i + 1]
       }
-      i--;
     }
-    if (arr[i] === "--double-prev") {
-      if (i > 0) {
-        arr[i] = arr[i - 1];
-      } else {
-        arr.splice(i, 1);
+    else if (key === "--discard-next") {
+      if (typeof (arr[i + 1]) !== "undefined") {
+        arr[i + 1] = NaN
+        arr[i] = NaN
       }
-      i--;
     }
   }
-  arr = arr.filter(val => val !== "sus");
-  return arr;
+  //console.log(arr)
+  for (let i = 0; i < arr.length; i++) {
+    if (isNaN(arr[i])) {
+      arr.splice(i, 1)
+      i--
+    }
+  }
+  //console.log('Res::')
+  //console.log(arr)
+  return arr
   throw new CustomError('Not implemented');
-};
+}

@@ -11,3 +11,4 @@ module.exports = function countCats(matrix) {
   else return 0;
   throw new CustomError('Not implemented');
 };
+// Done
