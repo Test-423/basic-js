@@ -1,25 +1,48 @@
 const CustomError = require("../extensions/custom-error");
 
 const chainMaker = {
+  mass: new Array(),
   getLength() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    return this.mass.length
   },
   addLink(value) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if(value ===undefined ) {
+      while(this.mass.length > 0){this.mass.pop()};
+      throw new CustomError('Not implemented');
+    }
+    this.mass.push((arguments.length)? ((typeof(value)==="string")? `( ${value} )` : `( ${value} )`) : "(  )")
+    return this
   },
   removeLink(position) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
-  },
+    if(position ===undefined || typeof(position)!=="number" || position%1!==0 || position<1) {
+      console.log(`Error position: ${position}`)
+      console.log(this.mass)
+      console.log('Not implemented');
+      while(this.mass.length > 0){this.mass.pop()};
+      throw new CustomError('Not implemented')
+    }
+    let len = this.mass.length
+    for(let i=0;i<this.mass.length;i++){
+      if(i+1===position) this.mass.splice(i,1)
+    }
+    if(len===this.mass.length) {
+      while(this.mass.length > 0){this.mass.pop()};
+      throw new CustomError('Not implemented');
+    }
+    return this
+    },
   reverseChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if (this.mass.length>0) {this.mass.reverse()}
+    return this
   },
   finishChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    let str = ""
+    for(let i = 0; i<this.mass.length;i++){
+      if(i===0) str+=this.mass[i]
+      else str+="~~"+this.mass[i]
+    }
+    while(this.mass.length>0){this.mass.pop()}
+    return str
   }
 };
 
