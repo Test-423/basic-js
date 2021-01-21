@@ -15,11 +15,8 @@ const chainMaker = {
   },
   removeLink(position) {
     if (position === undefined || typeof (position) !== "number" || position % 1 !== 0 || position < 1) {
-      console.log(`Error position: ${position}`)
-      console.log(this.mass)
-      console.log('Not implemented');
       while (this.mass.length > 0) { this.mass.pop() };
-      throw new CustomError('Not implemented')
+      throw Error
     }
     let len = this.mass.length
     for (let i = 0; i < this.mass.length; i++) {
@@ -27,7 +24,7 @@ const chainMaker = {
     }
     if (len === this.mass.length) {
       while (this.mass.length > 0) { this.mass.pop() };
-      throw new CustomError('Not implemented');
+      throw Error
     }
     return this
   },
