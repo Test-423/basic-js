@@ -6,42 +6,42 @@ const chainMaker = {
     return this.mass.length
   },
   addLink(value) {
-    if(value ===undefined ) {
-      while(this.mass.length > 0){this.mass.pop()};
+    if (value === undefined) {
+      while (this.mass.length > 0) { this.mass.pop() };
       throw new CustomError('Not implemented');
     }
-    this.mass.push((arguments.length)? ((typeof(value)==="string")? `( ${value} )` : `( ${value} )`) : "(  )")
+    this.mass.push((arguments.length) ? ((typeof (value) === "string") ? `( ${value} )` : `( ${value} )`) : "(  )")
     return this
   },
   removeLink(position) {
-    if(position ===undefined || typeof(position)!=="number" || position%1!==0 || position<1) {
+    if (position === undefined || typeof (position) !== "number" || position % 1 !== 0 || position < 1) {
       console.log(`Error position: ${position}`)
       console.log(this.mass)
       console.log('Not implemented');
-      while(this.mass.length > 0){this.mass.pop()};
+      while (this.mass.length > 0) { this.mass.pop() };
       throw new CustomError('Not implemented')
     }
     let len = this.mass.length
-    for(let i=0;i<this.mass.length;i++){
-      if(i+1===position) this.mass.splice(i,1)
+    for (let i = 0; i < this.mass.length; i++) {
+      if (i + 1 === position) this.mass.splice(i, 1)
     }
-    if(len===this.mass.length) {
-      while(this.mass.length > 0){this.mass.pop()};
+    if (len === this.mass.length) {
+      while (this.mass.length > 0) { this.mass.pop() };
       throw new CustomError('Not implemented');
     }
     return this
-    },
+  },
   reverseChain() {
-    if (this.mass.length>0) {this.mass.reverse()}
+    if (this.mass.length > 0) { this.mass.reverse() }
     return this
   },
   finishChain() {
     let str = ""
-    for(let i = 0; i<this.mass.length;i++){
-      if(i===0) str+=this.mass[i]
-      else str+="~~"+this.mass[i]
+    for (let i = 0; i < this.mass.length; i++) {
+      if (i === 0) str += this.mass[i]
+      else str += "~~" + this.mass[i]
     }
-    while(this.mass.length>0){this.mass.pop()}
+    while (this.mass.length > 0) { this.mass.pop() }
     return str
   }
 };

@@ -1,27 +1,16 @@
 const CustomError = require("../extensions/custom-error");
 
-let death = {
-  count: 0
-}
-
 module.exports = class DepthCalculator {
-  calculateDepth(arr) {
-    //console.log(arr)
-    death.count = 0
-    rec(arr, 1)
-    return death.count
-    throw new CustomError('Not implemented');
-  }
-};
-
-
-
-function rec(arr, vol) {
-  if (vol > death.count) death.count = vol
-  //console.log(vol)
-  for (let i = 0; i < arr.length; i++) {
-    if (typeof (arr[i]) === "object") {
-      rec(arr[i], vol + 1)
+  calculateDepth(arr, cryte) {
+    if (cryte === undefined) cryte = 1
+    let current, max = cryte
+    for (let i = 0; i < arr.length; i++) {
+      if (typeof (arr[i]) === "object") {
+        current = this.calculateDepth(arr[i], cryte + 1)
+        if (current > max) max = current
+      }
+      //throw new CustomError('Not implemented');
     }
+    return max
   }
 }
