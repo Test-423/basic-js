@@ -1,46 +1,42 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function transform(arr) {
+  let bar = [], check = 0, bool = []
   if (arr.length === 0 || typeof (arr) !== "object") return arr
-  //console.log(arr)
-  //console.log(arr.length)
-  for (let i = 0; i < arr.length; i++) {
-    let key = arr[i]
-    //console.log(key)
-    if (typeof (key) === "object") return arr
-
+  for (let key of arr) {
     if (key === "--double-prev") {
-      if (typeof (arr[i - 1]) !== "undefined") {
-        arr[i] = arr[i - 1]
+      if (arr[check - 1] !== undefined && arr[check - 1] !== "--discarded--") {
+        bar.push(arr[check - 1])
       }
     }
     else if (key === "--discard-prev") {
-      if (typeof (arr[i - 1]) !== "undefined") {
-        arr[i - 1] = NaN
-        arr[i] = NaN
+      if (typeof (arr[check - 1]) !== "undefined" && arr[check - 1] !== "--discarded--") {
+        bar.pop()
       }
     }
     else if (key === "--double-next") {
-      if (typeof (arr[i + 1]) !== "undefined") {
-        arr[i] = arr[i + 1]
+      if (check + 1 !== arr.length) {
+        bar.push(arr[check + 1])
       }
     }
     else if (key === "--discard-next") {
-      if (typeof (arr[i + 1]) !== "undefined") {
-        arr[i + 1] = NaN
-        arr[i] = NaN
+      if (check + 1 !== arr.length) {
+        bool.push(arr[check + 1])
+        arr[check + 1] = "--discarded--"
       }
     }
-  }
-  //console.log(arr)
-  for (let i = 0; i < arr.length; i++) {
-    if (isNaN(arr[i])) {
-      arr.splice(i, 1)
-      i--
+    else if (key !== "--discarded--") {
+      bar.push(key)
     }
+    check++
   }
-  //console.log('Res::')
-  //console.log(arr)
-  return arr
+  check=0
+  for (let key of arr) {
+    if (key === "--discarded--") {
+      arr[check] = bool.shift()
+    }
+    check++
+  }
+  return bar
   throw new CustomError('Not implemented');
 }
