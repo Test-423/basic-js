@@ -30,7 +30,7 @@ module.exports = function transform(arr) {
     }
     check++
   }
-  check=0
+  check = 0
   for (let key of arr) {
     if (key === "--discarded--") {
       arr[check] = bool.shift()
