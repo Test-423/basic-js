@@ -10,4 +10,3 @@ module.exports = function countCats(m) {
   return c;
   //throw new CustomError('Not implemented');
 };
-// Done

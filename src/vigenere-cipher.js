@@ -59,8 +59,6 @@ class VigenereCipheringMachine {
     }
     if(this.name===false) return final.split("").reverse().join("")
     else return final
-    //throw new CustomError('Not implemented');
-    // remove line with error and write your code here
   }
 }
 
